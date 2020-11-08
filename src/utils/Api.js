@@ -22,16 +22,16 @@ export class Api {
       headers: this._headers,
     })
       .then((res) => {return this._sendStandartThen(res);})
-      .catch((err) => {this._sendStandartCatch(err)});
+      //.catch((err) => {this._sendStandartCatch(err)});
   }
   
   getInitialProfile() {
-    return fetch(`${this._baseUrl}/users/me`, {//данный профиля
+    return fetch(`${this._baseUrl}/users/me`, {//данные профиля
       method: 'GET',
       headers: this._headers,
     })
       .then((res) => {return this._sendStandartThen(res);})
-      .catch((err) => {this._sendStandartCatch(err)});
+      //.catch((err) => {this._sendStandartCatch(err)});
   }
 
   changeProfile(nameInput, infoInput) {

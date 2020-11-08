@@ -8,19 +8,25 @@ function Main(props) {
   const [userAvatar, setUserAvatar] = React.useState('');
   React.useEffect(() => {
     api.getInitialProfile()
-    .then((data) => {
-      setUserAvatar(data.avatar);
-      setUserName(data.name);
-      setUserDescription(data.about);
-    })
+      .then((data) => {
+        setUserAvatar(data.avatar);
+        setUserName(data.name);
+        setUserDescription(data.about);
+      })
+      .catch((err) => {
+        console.log(err);
+      }); 
   }, []); 
 
   const [cards, setCards] = React.useState([]);
   React.useEffect(() => {
     api.getInitialCards()
-    .then((data) => {
-      setCards(data)
-    })
+      .then((data) => {
+        setCards(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      }); 
   }, []);
 
 
