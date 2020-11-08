@@ -45,7 +45,7 @@ export class Api {
       })
     }) 
       .then((res) => {return this._sendStandartThen(res);})
-      .catch((err) => {this._sendStandartCatch(err)})
+      //.catch((err) => {this._sendStandartCatch(err)})
       .finally(() => {
         this._renderLoading(false, '.form_edit-button')
       });
@@ -68,7 +68,7 @@ export class Api {
 
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch((err) => {this._sendStandartCatch(err)})
+      //.catch((err) => {this._sendStandartCatch(err)})
       .finally(() => {
         this._renderLoading(false, '.form_add-button')
       });
