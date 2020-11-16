@@ -1,57 +1,40 @@
 import React from 'react';
 import Card from './Card';
 import {api} from '../utils/Api.js';
+import {CurrentUserContext} from './CurrentUserContext.js';
+//import {CardsContext} from './CardsContext.js'
 
 function Main(props) {
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
-  React.useEffect(() => {
-    api.getInitialProfile()
-      .then((data) => {
-        setUserAvatar(data.avatar);
-        setUserName(data.name);
-        setUserDescription(data.about);
-      })
-      .catch((err) => {
-        console.log(err);
-      }); 
-  }, []); 
-
-  const [cards, setCards] = React.useState([]);
-  React.useEffect(() => {
-    api.getInitialCards()
-      .then((data) => {
-        setCards(data)
-      })
-      .catch((err) => {
-        console.log(err);
-      }); 
-  }, []);
-
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
      <main className="main">
       <section className="profile">
         <div className="profile__overlay">
           <button className="profile__avatar-button" type="button" onClick={props.onEditAvatar}>
-            <img className="profile__avatar" src={userAvatar} alt="Аватар вашей страницы"/>
+            <img className="profile__avatar" src={currentUser ? currentUser.avatar : "https://i.gifer.com/g0R5.gif"} alt="Аватар вашей страницы"/>
             <div className="profile__avatar-icon"></div>
           </button>
         </div>
         <div className="profile__column">
           <div className="profile__info">
-            <h1 className="profile__user-name">{userName}</h1>
+            <h1 className="profile__user-name">{currentUser ? currentUser.name : ""}</h1>
             <button className="profile__edit-button" type="button" onClick={props.onEditProfile}></button>
-            <p className="profile__user-info">{userDescription}</p>
+            <p className="profile__user-info">{currentUser ? currentUser.about : ""}</p>
           </div>
           <button className="profile__add-button" type="button" onClick={props.onAddPlace}></button>
         </div>
       </section>
       <section className="elements">
-      {cards.map((card) => (
-        <Card onCardClick={props.onCardClick} card={card} key={card._id} />
-      ))}
+      {props.cards && props.cards.map((card) => { 
+          const isOwn = card.owner._id === currentUser._id;
+
+          const cardDeleteButtonClassName = (
+            `element__btn-delete ${!isOwn && 'element__btn-delete_inactive'}`
+          ); 
+          
+          return (<Card onCardLike={props.onCardLike} onCardDelete={props.onCardDelete} btnDeleteSelector={cardDeleteButtonClassName} onCardClick={props.onCardClick} card={card} key={card._id} />)
+        })}
       </section>
     </main>
  )

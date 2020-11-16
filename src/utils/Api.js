@@ -2,6 +2,10 @@ export class Api {
   constructor(data) {
     this._baseUrl = data.baseUrl;
     this._headers = data.headers;
+
+    this.editFormName = 'profile-сhange';
+    this.addFormName = 'adding-a-picture';
+    this.avatarFormName = 'avatar-сhange';
   }
 
   _sendStandartThen(res) {
@@ -35,8 +39,8 @@ export class Api {
   }
 
   changeProfile(nameInput, infoInput) {
-    this._renderLoading(true, '.form_edit-button')
-    fetch(`${this._baseUrl}/users/me`, {
+    this._renderLoading(true, this.editFormName)
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -44,15 +48,16 @@ export class Api {
         about: infoInput
       })
     }) 
+    
       .then((res) => {return this._sendStandartThen(res);})
       //.catch((err) => {this._sendStandartCatch(err)})
       .finally(() => {
-        this._renderLoading(false, '.form_edit-button')
+        this._renderLoading(false, this.editFormName)
       });
   }
 
   addCard( name, link) {
-    this._renderLoading(true, '.form_add-button')
+    this._renderLoading(true, this.addFormName)
     return fetch(`${this._baseUrl}/cards`, {//делаем запрос, что мы добавили новую карточку
       method: 'POST',
       headers: this._headers,
@@ -70,57 +75,67 @@ export class Api {
       })
       //.catch((err) => {this._sendStandartCatch(err)})
       .finally(() => {
-        this._renderLoading(false, '.form_add-button')
+        this._renderLoading(false, this.addFormName)
       });
   }
 
 
   addLikeItem(idItem) {
-    fetch(`${this._baseUrl}/cards/likes/${idItem}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${idItem}`, {
       method: 'PUT',
       headers: this._headers
     })
-      .catch((err) => {
-        console.log(err); 
-      })
+      .then((res) => {return this._sendStandartThen(res);})
+      //.then((data) => {console.log(data)})
+     // .catch((err) => {this._sendStandartCatch(err)})
   }
 
   removeLikeItem(idItem) {
-    fetch(`${this._baseUrl}/cards/likes/${idItem}`, {
+    return fetch(`${this._baseUrl}/cards/likes/${idItem}`, {
       method: 'DELETE',
       headers: this._headers
     })
-      .catch((err) => {this._sendStandartCatch(err)})
+    .then((res) => {return this._sendStandartThen(res);})
+      //.catch((err) => {this._sendStandartCatch(err)})
+  }
+
+  changeLikeCardStatus(idItem, likeStatus){
+    if(likeStatus) {
+      return this.addLikeItem(idItem)
+    } else {
+      return this.removeLikeItem(idItem)
+    }
   }
 
   deleteItem(idItem) {
-    fetch(`${this._baseUrl}/cards/${idItem}`, {
+    return fetch(`${this._baseUrl}/cards/${idItem}`, {
       method: 'DELETE',
       headers: this._headers
     })
-      .catch((err) => {this._sendStandartCatch(err)})
+    .then((res) => {return this._sendStandartThen(res);})
+      //.catch((err) => {this._sendStandartCatch(err)})
   }
 
   changeAvatarProfile(link) {
-    this._renderLoading(true, '.form_new-avatar')
-    fetch(`${this._baseUrl}/users/me/avatar`, {
+    this._renderLoading(true, this.avatarFormName)
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar: link
       })
     })
-      .catch((err) => {this._sendStandartCatch(err)}) 
+      .then((res) => {return this._sendStandartThen(res);})
       .finally(() => {
-        this._renderLoading(false, '.form_new-avatar')
+        this._renderLoading(false, this.avatarFormName)
       });
   }
 
   _renderLoading(isLoading, popupSelector) {
     if(isLoading) {
-      document.querySelector(popupSelector).querySelector('.profile-form__btn-save').textContent = "Сохранение..."
+      document.querySelector(`form[name=${popupSelector}]`).querySelector('.profile-form__btn-save').textContent = "Сохранение..."
     } else {
-      document.querySelector(popupSelector).querySelector('.profile-form__btn-save').textContent = "Сохранить"
+      document.querySelector(`form[name=${popupSelector}]`).querySelector('.profile-form__btn-save').textContent = "Сохранить"
     }
   }
 }

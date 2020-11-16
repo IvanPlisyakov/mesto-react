@@ -32,7 +32,7 @@ import nolabelImage from '../images/element-no_label.jpg';*/
   }
 ];*/
 
-export const EditAvatarPopupChildren = (
+/*export const EditAvatarPopupChildren = (
   <label className="profile-form__field">
     <input className="profile-form__user profile-form__user_data_info" id="avatar-input" type="url" name="adding-a-picture" placeholder="Ссылка на аватар" required/>
     <span className="profile-form__user-error" id="avatar-input-error"></span>
@@ -63,7 +63,7 @@ export const AddPlacePopupChildren = (
       <span className="profile-form__user-error" id="link-input-error"></span>
     </label>
   </>
-)
+)*/
 
 export const tuningValidation = {
   form: '.profile-form',
