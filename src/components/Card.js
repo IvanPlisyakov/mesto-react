@@ -1,5 +1,5 @@
 import React from 'react';
-import {CurrentUserContext} from './CurrentUserContext.js';
+import {CurrentUserContext} from '../contexts/CurrentUserContext.js';
 //import {api} from '../utils/Api.js';
 
 import imgButtonDeleteCap from '../images/element__img-cap.svg';
@@ -7,6 +7,8 @@ import imgButtonDeleteUrn from '../images/element__img-urn.svg'
 
 function Card(props) {
   const currentUser = React.useContext(CurrentUserContext);
+
+  const isOwn = props.card.owner._id === currentUser._id;
 
   function handleClick() {
     props.onCardClick(props.card);
@@ -25,7 +27,7 @@ function Card(props) {
     <div className="element__overlay">
       <img className="element__image" src={props.card.link} onClick={handleClick} alt=""/>
     </div>
-    <button className={props.btnDeleteSelector} type="button" onClick={handleDeleteClick}>
+    <button className={`element__btn-delete ${!isOwn && 'element__btn-delete_inactive'}`} type="button" onClick={handleDeleteClick}>
       <img className="element__img-cap" src={imgButtonDeleteCap} alt=""/>
       <img className="element__img-urn" src={imgButtonDeleteUrn} alt=""/>
     </button>

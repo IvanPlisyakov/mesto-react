@@ -1,6 +1,4 @@
-
 import React from 'react';
-import '../index.css';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
@@ -10,7 +8,7 @@ import EditProfilePopup from './EditProfilePopup';
 import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import {api} from '../utils/Api.js';
-import {CurrentUserContext} from './CurrentUserContext.js';
+import {CurrentUserContext} from '../contexts/CurrentUserContext.js';
 //import { HandlePopupClose } from '../utils/HandlePopupClose.js'
 //import {CardsContext} from './CardsContext.js'
 
@@ -30,9 +28,9 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isOpenCardPopupOpen, setIsOpenCardPopupOpen] = React.useState(false);
 
-  const [selectedCard, setSelectedCard] = React.useState('');
+  const [selectedCard, setSelectedCard] = React.useState({});
 
-  const [currentUser, setCurrentUser] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState({});
   React.useEffect(() => {
     api.getInitialProfile()
       .then((data) => { setCurrentUser(data); })
@@ -89,9 +87,7 @@ function App() {
       .catch((err) => { sendStandartCatch(err); });
   }
 
-
-
-  const [cards, setCards] = React.useState(false);
+  const [cards, setCards] = React.useState([]);
   React.useEffect(() => {
     api.getInitialCards()
       .then((data) => {

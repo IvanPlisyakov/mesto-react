@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from './Card';
-import {api} from '../utils/Api.js';
-import {CurrentUserContext} from './CurrentUserContext.js';
+//import {api} from '../utils/Api.js';
+import {CurrentUserContext} from '../contexts/CurrentUserContext.js';
 //import {CardsContext} from './CardsContext.js'
 
 function Main(props) {
@@ -26,14 +26,8 @@ function Main(props) {
         </div>
       </section>
       <section className="elements">
-      {props.cards && props.cards.map((card) => { 
-          const isOwn = card.owner._id === currentUser._id;
-
-          const cardDeleteButtonClassName = (
-            `element__btn-delete ${!isOwn && 'element__btn-delete_inactive'}`
-          ); 
-          
-          return (<Card onCardLike={props.onCardLike} onCardDelete={props.onCardDelete} btnDeleteSelector={cardDeleteButtonClassName} onCardClick={props.onCardClick} card={card} key={card._id} />)
+      {props.cards && props.cards.map((card) => {     
+          return (<Card onCardLike={props.onCardLike} onCardDelete={props.onCardDelete} onCardClick={props.onCardClick} card={card} key={card._id} />)
         })}
       </section>
     </main>
