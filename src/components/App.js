@@ -60,7 +60,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsOpenCardPopupOpen(false);
-    setSelectedCard('');
+    setSelectedCard({});
   }
 
   function handleUpdateAvatar(avatarData) {
