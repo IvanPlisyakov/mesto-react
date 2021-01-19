@@ -1,4 +1,4 @@
-.profile-form__btn-close {
+.infoTooltip__btn-close {
   position: absolute;
   background-image: url(../../../images/profile-form__btn-close.svg);
   object-fit: cover;
@@ -14,6 +14,21 @@
   cursor: pointer;
 }
 
-.profile-form__btn-close:hover {
+.infoTooltip__btn-close:hover {
   opacity: 0.6;
+}
+
+@media screen and (max-width: 900px){
+  .infoTooltip__btn-close  {
+    top: -50px;
+    left: 50%;
+    transform: translate(-50%, calc(-50% + 25px/2));
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .infoTooltip__btn-close  {
+    right: -36px;
+    top: -36px;
+  } 
 }

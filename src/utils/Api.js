@@ -70,7 +70,6 @@ export class Api {
         if (res.ok) {
           return this.getInitialCards();//res.json();
        }
-
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       //.catch((err) => {this._sendStandartCatch(err)})
